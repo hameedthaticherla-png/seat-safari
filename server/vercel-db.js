@@ -1,9 +1,5 @@
 const { Pool } = require('@neondatabase/serverless');
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is required for the Vercel deployment.');
-}
-
 let pool;
 
 function getPool() {
