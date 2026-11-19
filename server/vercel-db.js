@@ -1,14 +1,15 @@
-const { Pool } = require('@neondatabase/serverless');
+const { Pool } = require('pg');
 
 let pool;
 
 function getPool() {
-  if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL is required for the Vercel deployment.');
+  const connectionString = process.env.DATABASE_URL_POOLED || process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error('DATABASE_URL_POOLED or DATABASE_URL is required for the Vercel deployment.');
   }
   if (!pool) {
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString,
       max: 5,
       idleTimeoutMillis: 10_000,
       connectionTimeoutMillis: 5_000,
