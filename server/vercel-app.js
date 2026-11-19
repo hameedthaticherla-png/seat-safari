@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('node:fs');
 const path = require('node:path');
 const occupancyRoutes = require('./vercel-occupancy');
 const { getPool, initializeSchema } = require('./vercel-db');
@@ -26,9 +27,28 @@ app.use('/api/occupancy', occupancyRoutes);
 
 app.use('/api', (_req, res) => res.status(404).json({ error: 'API route not found' }));
 
-// Vercel serves public assets from its CDN; this fallback supports React Router deep links.
+// Vercel may not publish build-generated files in public/ to its CDN, so serve
+// existing files from the function bundle before falling back to the SPA shell.
+const publicDirectory = path.resolve(__dirname, '..', 'public');
+app.use((req, res, next) => {
+  let assetPath;
+  try {
+    assetPath = path.resolve(publicDirectory, '.' + decodeURIComponent(req.path));
+  } catch {
+    return res.status(400).end();
+  }
+  if (!assetPath.startsWith(publicDirectory + path.sep)) return next();
+  try {
+    if (fs.statSync(assetPath).isFile()) return res.sendFile(assetPath);
+  } catch (error) {
+    if (error.code !== 'ENOENT' && error.code !== 'ENOTDIR') return next(error);
+  }
+  next();
+});
+
+// This fallback supports React Router deep links.
 app.use((_req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+  res.sendFile(path.join(publicDirectory, 'index.html'));
 });
 
 app.use((error, _req, res, _next) => {
