@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode in Tailwind CSS v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Centralized Seat Safari Design Tokens */
+  --color-safari-bg: var(--safari-bg);
+  --color-safari-surface: var(--safari-surface);
+  --color-safari-elevated: var(--safari-elevated);
+  --color-safari-accent: var(--safari-accent);
+  --color-safari-accent-hover: var(--safari-accent-hover);
+  --color-safari-text: var(--safari-text);
+  --color-safari-muted: var(--safari-muted);
+  --color-safari-border: var(--safari-border);
+}
+
+:root {
+  font-family: var(--font-sans);
+  color-scheme: light;
+
+  /* Light Mode Tokens */
+  --safari-bg: #F8F8F8;
+  --safari-surface: #FFFFFF;
+  --safari-elevated: #FFFFFF;
+  --safari-accent: #EA580C;
+  --safari-accent-hover: #C2410C;
+  --safari-text: #171717;
+  --safari-muted: #737373;
+  --safari-border: #E5E5E5;
+}
+
+.dark, [data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Dark Mode Tokens */
+  --safari-bg: #111318;
+  --safari-surface: #202127;
+  --safari-elevated: #292A30;
+  --safari-accent: #F97316;
+  --safari-accent-hover: #EA580C;
+  --safari-text: #F5F5F5;
+  --safari-muted: #A1A1AA;
+  --safari-border: #33343B;
+}
+
+body {
+  background-color: var(--safari-bg);
+  color: var(--safari-text);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Touch targets for mobile */
+button, a, input, select, textarea, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Subtle, modern scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(82, 82, 91, 0.4);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(115, 115, 115, 0.5);
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .site-shell {
+    display: none !important;
+  }
+  .qr-screen-only {
+    display: none !important;
+  }
+  .qr-print-only,
+  .qr-print-only * {
+    visibility: visible;
+  }
+  .qr-print-only {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    padding: 12mm;
+    background: white !important;
+    color: #111 !important;
+  }
+  .qr-label-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5mm;
+  }
+  .qr-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2mm;
+    break-inside: avoid;
+    border: 1px solid #bbb;
+    padding: 4mm;
+    text-align: center;
+    font-size: 9pt;
+  }
+  .qr-label svg {
+    width: 25mm;
+    height: 25mm;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+.qr-print-only {
+  display: none;
+}

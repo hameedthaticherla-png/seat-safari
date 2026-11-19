@@ -1,0 +1,22 @@
+# Dependencies and build output
+node_modules/
+client/node_modules/
+client/dist/
+dist/
+coverage/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Local SQLite databases and journals (never publish campus occupancy data)
+server/data/*.db
+server/data/*.db-*
+
+# Temporary files and editor/OS state
+tmp/
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
