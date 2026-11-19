@@ -1,0 +1,12 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci && npm --prefix client ci",
+  "buildCommand": "npm run build:vercel",
+  "framework": "express",
+  "functions": {
+    "index.js": {
+      "includeFiles": ["server/occupancy-seed.json", "public/**"]
+    }
+  },
+  "regions": ["bom1"]
+}

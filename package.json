@@ -6,9 +6,13 @@
   "scripts": {
     "start": "node server/index.js",
     "seed": "node server/seed.js",
-    "build": "npm.cmd --prefix client run build",
-    "dev:client": "npm.cmd --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "build:vercel": "npm run build && node scripts/copy-vercel-assets.js",
+    "dev:client": "npm --prefix client run dev",
     "test": "node tests/occupancy.test.js && node tests/theme.test.js"
+  },
+  "engines": {
+    "node": ">=22.5"
   },
   "keywords": [
     "campus",
@@ -22,6 +26,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@neondatabase/serverless": "^1.2.1",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^18.0.10",

@@ -56,7 +56,7 @@ Seat status is self-reported; a static QR label identifies a seat but does not v
 
 ## Hosting
 
-GitHub is suitable for hosting this source repository and its project documents. GitHub Pages only serves static files; it cannot run this Express API or SQLite database. To host the working application, deploy the Node.js server to a service that supports persistent storage for SQLite, then configure the campus-reachable URL and production secrets. The app can be served from that same Node.js service after building the client.
+The Vercel deployment uses the Express API as a Node.js Function and serves the Vite client as static assets. Live occupancy and feedback are stored in Neon Postgres; the local SQLite database is for local development only and is not migrated or deployed. Set `DATABASE_URL` in Vercel from the connected Neon integration before publishing a production deployment.
 
 ## License
 
