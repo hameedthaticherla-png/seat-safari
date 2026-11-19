@@ -52,12 +52,14 @@ async function clearStaleOccupancy() {
 
 async function loadTrackedLocations(deviceToken = '') {
   const pool = getPool();
-  await clearStaleOccupancy();
   const { rows } = await pool.query(`
     SELECT seat_id, occupied, device_token, expires_at, updated_at
-    FROM seat_occupancy WHERE occupied = TRUE
+    FROM seat_occupancy
+    WHERE occupied = TRUE AND (expires_at IS NULL OR expires_at > NOW())
   `);
-  const occupancyBySeat = new Map(rows.map((row) => [row.seat_id, row]));
+  const occupancyBySeat = new Map(rows
+    .filter(({ seat_id }) => !isPastClosing(seatIndex.get(seat_id)?.space?.hours))
+    .map((row) => [row.seat_id, row]));
 
   return trackedBuildings.map((building) => ({
     id: building.id,
