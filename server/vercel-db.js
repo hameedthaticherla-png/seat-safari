@@ -3,9 +3,11 @@ const { Pool } = require('pg');
 let pool;
 
 function getPool() {
-  const connectionString = process.env.DATABASE_URL_POOLED || process.env.DATABASE_URL;
+  const connectionString = process.env.POSTGRES_PRISMA_URL
+    || process.env.POSTGRES_URL
+    || process.env.DATABASE_URL;
   if (!connectionString) {
-    throw new Error('DATABASE_URL_POOLED or DATABASE_URL is required for the Vercel deployment.');
+    throw new Error('POSTGRES_PRISMA_URL, POSTGRES_URL, or DATABASE_URL is required for the Vercel deployment.');
   }
   if (!pool) {
     pool = new Pool({
