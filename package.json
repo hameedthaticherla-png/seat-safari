@@ -2,7 +2,7 @@
   "name": "seat-safari",
   "version": "1.0.0",
   "description": "Central Library live empty-seat and occupancy tracker",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
     "seed": "node server/seed.js",
