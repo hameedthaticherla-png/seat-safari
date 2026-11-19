@@ -3,9 +3,9 @@ const { Pool } = require('pg');
 let pool;
 
 function getPool() {
-  const connectionString = process.env.POSTGRES_PRISMA_URL
+  const connectionString = process.env.DATABASE_URL_POOLED
+    || process.env.POSTGRES_PRISMA_URL
     || process.env.POSTGRES_URL
-    || process.env.DATABASE_URL_POOLED
     || process.env.DATABASE_URL;
   if (!connectionString) {
     throw new Error('A pooled or direct PostgreSQL connection variable is required for the Vercel deployment.');
