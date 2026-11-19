@@ -5,7 +5,7 @@
   "framework": "express",
   "functions": {
     "index.js": {
-      "includeFiles": ["server/occupancy-seed.json", "public/**"]
+      "includeFiles": "public/**"
     }
   },
   "regions": ["bom1"]
